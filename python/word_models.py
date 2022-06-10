@@ -49,8 +49,6 @@ PROFIT_MATCHER = word_matchers.MultiWordMatcher(
     "upsides",
 )
 
-PAYMENT_MATCHER = word_matchers.FirstMatcher(MONEY_MATCHER, INTEREST_MATCHER)
-
 GET_MATCHER = word_matchers.MultiWordMatcher("get", "gets", "getting", "got")
 GUARANTEE_MATCHER = word_matchers.MultiWordMatcher(
     "guarantee", "guarantees", "guaranteeing", "guaranteed"
@@ -107,7 +105,7 @@ PASSIVE_GET_MATCHER = word_matchers.MultiWordMatcher(
 
 PASSIVE_GET_PAYMENT_MATCHER = word_matchers.make_distance_matcher(
     2,
-    PAYMENT_MATCHER,
+    word_matchers.FirstMatcher(MONEY_MATCHER, INTEREST_MATCHER, PROFIT_MATCHER),
     PASSIVE_GET_MATCHER,
 ).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
 
@@ -161,6 +159,7 @@ INCREASE_MATCHER = word_matchers.MultiWordMatcher(
 
 FINANCIAL_INSTRUMENTS_MATCHER = word_matchers.FirstMatcher(
     word_matchers.MultiWordMatcher(
+        "apy",
         "cusip",
         "forex",
         "ico",
