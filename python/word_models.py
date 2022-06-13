@@ -2,7 +2,7 @@ from typing import Dict
 
 from . import word_matchers
 
-MONEY_MATCHER = word_matchers.MultiWordMatcher(
+_MONEY_MATCHER = word_matchers.MultiWordMatcher(
     "$",
     "$$",
     "$$$",
@@ -19,7 +19,7 @@ MONEY_MATCHER = word_matchers.MultiWordMatcher(
     "usds",
 )
 
-INTEREST_MATCHER = word_matchers.MultiWordMatcher(
+_INTEREST_MATCHER = word_matchers.MultiWordMatcher(
     "coupon",
     "coupons",
     "disimbursement",
@@ -36,7 +36,7 @@ INTEREST_MATCHER = word_matchers.MultiWordMatcher(
     "yields",
 )
 
-PROFIT_MATCHER = word_matchers.MultiWordMatcher(
+_PROFIT_MATCHER = word_matchers.MultiWordMatcher(
     "gain",
     "gains",
     "income",
@@ -51,73 +51,73 @@ PROFIT_MATCHER = word_matchers.MultiWordMatcher(
     "upsides",
 )
 
-GET_MATCHER = word_matchers.MultiWordMatcher("get", "gets", "getting", "got")
-GUARANTEE_MATCHER = word_matchers.MultiWordMatcher(
+_GET_MATCHER = word_matchers.MultiWordMatcher("get", "gets", "getting", "got")
+_GUARANTEE_MATCHER = word_matchers.MultiWordMatcher(
     "guarantee", "guarantees", "guaranteeing", "guaranteed"
 )
-MAKE_MATCHER = word_matchers.MultiWordMatcher("make", "makes", "making", "made")
-PAY_MATCHER = word_matchers.MultiWordMatcher("pay", "pays", "paying", "paid")
-RECEIVE_MATCHER = word_matchers.MultiWordMatcher(
+_MAKE_MATCHER = word_matchers.MultiWordMatcher("make", "makes", "making", "made")
+_PAY_MATCHER = word_matchers.MultiWordMatcher("pay", "pays", "paying", "paid")
+_RECEIVE_MATCHER = word_matchers.MultiWordMatcher(
     "receive", "receives", "receiving", "received"
 )
-SEND_MATCHER = word_matchers.MultiWordMatcher("send", "sends", "sending", "sent")
-TAKE_MATCHER = word_matchers.MultiWordMatcher(
+_SEND_MATCHER = word_matchers.MultiWordMatcher("send", "sends", "sending", "sent")
+_TAKE_MATCHER = word_matchers.MultiWordMatcher(
     "take", "takes", "taking", "took", "taken"
 )
-NEGATE_POST_MATCHER = word_matchers.MultiWordMatcher("no", "none", "not")
+_NEGATE_POST_MATCHER = word_matchers.MultiWordMatcher("no", "none", "not")
 
 LABEL_AND_MATCHER: Dict[str, word_matchers.BaseMatcher] = {}
 
 LABEL_AND_MATCHER["GET_MONEY"] = word_matchers.make_distance_matcher(
     4,
     word_matchers.FirstMatcher(
-        GET_MATCHER,
-        GUARANTEE_MATCHER,
-        MAKE_MATCHER,
-        PAY_MATCHER,
-        RECEIVE_MATCHER,
-        SEND_MATCHER,
-        TAKE_MATCHER,
+        _GET_MATCHER,
+        _GUARANTEE_MATCHER,
+        _MAKE_MATCHER,
+        _PAY_MATCHER,
+        _RECEIVE_MATCHER,
+        _SEND_MATCHER,
+        _TAKE_MATCHER,
     ),
-    MONEY_MATCHER,
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    _MONEY_MATCHER,
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["GET_INTEREST"] = word_matchers.make_distance_matcher(
     4,
     word_matchers.FirstMatcher(
-        GET_MATCHER, GUARANTEE_MATCHER, PAY_MATCHER, RECEIVE_MATCHER
+        _GET_MATCHER, _GUARANTEE_MATCHER, _PAY_MATCHER, _RECEIVE_MATCHER
     ),
-    INTEREST_MATCHER,
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    _INTEREST_MATCHER,
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["GET_PROFIT"] = word_matchers.make_distance_matcher(
     4,
     word_matchers.FirstMatcher(
-        GET_MATCHER,
-        GUARANTEE_MATCHER,
-        MAKE_MATCHER,
-        RECEIVE_MATCHER,
-        SEND_MATCHER,
-        TAKE_MATCHER,
+        _GET_MATCHER,
+        _GUARANTEE_MATCHER,
+        _MAKE_MATCHER,
+        _RECEIVE_MATCHER,
+        _SEND_MATCHER,
+        _TAKE_MATCHER,
     ),
-    PROFIT_MATCHER,
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    _PROFIT_MATCHER,
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
-PASSIVE_GET_MATCHER = word_matchers.MultiWordMatcher(
+_PASSIVE_GET_MATCHER = word_matchers.MultiWordMatcher(
     "guaranteed", "made", "paid", "received", "sent", "taken"
 )
 
 LABEL_AND_MATCHER["MONEY_GOT"] = word_matchers.make_distance_matcher(
-    2, MONEY_MATCHER, PASSIVE_GET_MATCHER
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    2, _MONEY_MATCHER, _PASSIVE_GET_MATCHER
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["INTEREST_GOT"] = word_matchers.make_distance_matcher(
-    2, INTEREST_MATCHER, PASSIVE_GET_MATCHER
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    2, _INTEREST_MATCHER, _PASSIVE_GET_MATCHER
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["PROFIT_GOT"] = word_matchers.make_distance_matcher(
-    2, PROFIT_MATCHER, PASSIVE_GET_MATCHER
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+    2, _PROFIT_MATCHER, _PASSIVE_GET_MATCHER
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["FINANCIAL_FREEDOM"] = word_matchers.make_distance_matcher(
     2,
@@ -129,34 +129,6 @@ LABEL_AND_MATCHER["RETIRE_EARLY"] = word_matchers.make_distance_matcher(
     2,
     word_matchers.MultiWordMatcher("retire", "retires", "retiring", "retired"),
     word_matchers.MultiWordMatcher("early", "now", "soon", "tomorrow"),
-)
-
-BE_MATCHER = word_matchers.MultiWordMatcher("be", "is", "are", "was", "were")
-
-ACTIVE_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
-    "double",
-    "doubling",
-    "doubled",
-    "grow",
-    "growing",
-    "grew",
-    "increase",
-    "increasing",
-    "increased",
-    "multiply",
-    "multiplying",
-    "multiplied",
-    "triple",
-    "tripling",
-    "tripled",
-)
-
-PASSIVE_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
-    "doubled",
-    "grown",
-    "increased",
-    "multiplied",
-    "tripled",
 )
 
 LABEL_AND_MATCHER["SECURITY_UNIGRAM"] = word_matchers.MultiWordMatcher(
@@ -172,7 +144,7 @@ LABEL_AND_MATCHER["SECURITY_UNIGRAM"] = word_matchers.MultiWordMatcher(
 
 LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
-    BE_MATCHER,
+    word_matchers.MultiWordMatcher("be", "is", "are", "was", "were"),
     word_matchers.FirstMatcher(
         word_matchers.MultiWordMatcher(
             "investing",
@@ -186,25 +158,47 @@ LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
             "making",
         ),
     ),
-).post(negative_matcher=NEGATE_POST_MATCHER, padding_start=2)
+).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
-WHAT_TO_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
+_WHAT_TO_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
     "investment", "investments", "money", "moneys"
 )
 
 LABEL_AND_MATCHER["INCREASE_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
-    ACTIVE_INCREASE_MATCHER,
-    WHAT_TO_INCREASE_MATCHER,
+    word_matchers.MultiWordMatcher(
+        "double",
+        "doubling",
+        "doubled",
+        "grow",
+        "growing",
+        "grew",
+        "increase",
+        "increasing",
+        "increased",
+        "multiply",
+        "multiplying",
+        "multiplied",
+        "triple",
+        "tripling",
+        "tripled",
+    ),
+    _WHAT_TO_INCREASE_MATCHER,
 )
 
 LABEL_AND_MATCHER["INVESTMENT_INCREASED"] = word_matchers.make_distance_matcher(
     2,
-    WHAT_TO_INCREASE_MATCHER,
-    PASSIVE_INCREASE_MATCHER,
+    _WHAT_TO_INCREASE_MATCHER,
+    word_matchers.MultiWordMatcher(
+        "doubled",
+        "grown",
+        "increased",
+        "multiplied",
+        "tripled",
+    ),
 )
 
-SECURITY_MATCHER = word_matchers.MultiWordMatcher(
+_SECURITY_MATCHER = word_matchers.MultiWordMatcher(
     "bond",
     "bonds",
     "commodities",
@@ -223,7 +217,7 @@ SECURITY_MATCHER = word_matchers.MultiWordMatcher(
 
 LABEL_AND_MATCHER["CRYPTO_OFFERING"] = word_matchers.make_distance_matcher(
     2,
-    SECURITY_MATCHER.extend("coin", "crypto"),
+    _SECURITY_MATCHER.extend("coin", "crypto"),
     "offering",
 )
 
@@ -243,32 +237,30 @@ LABEL_AND_MATCHER["PASSIVE_INCOME"] = word_matchers.SeqMatcher(
         "recurring",
         "diversified",
     ),
-    PROFIT_MATCHER.extend("investment"),
-)
-
-ACTIVE_TRADE_MATCHER = word_matchers.MultiWordMatcher(
-    "buy",
-    "buying",
-    "bought",
-    "sell",
-    "selling",
-    "sold",
-    "trade",
-    "trading",
-    "traded",
-    "transact",
-    "transacting",
-    "transacted",
+    _PROFIT_MATCHER.extend("investment"),
 )
 
 LABEL_AND_MATCHER["TRADE_SECURITY"] = word_matchers.make_distance_matcher(
     4,
-    ACTIVE_TRADE_MATCHER,
-    SECURITY_MATCHER,
+    word_matchers.MultiWordMatcher(
+        "buy",
+        "buying",
+        "bought",
+        "sell",
+        "selling",
+        "sold",
+        "trade",
+        "trading",
+        "traded",
+        "transact",
+        "transacting",
+        "transacted",
+    ),
+    _SECURITY_MATCHER,
 )
 
 LABEL_AND_MATCHER["SECURITY_TRADED"] = word_matchers.make_distance_matcher(
     2,
-    SECURITY_MATCHER,
+    _SECURITY_MATCHER,
     word_matchers.MultiWordMatcher("bought", "sold", "traded", "transacted"),
 )
