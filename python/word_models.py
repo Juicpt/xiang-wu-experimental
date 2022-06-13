@@ -52,18 +52,25 @@ _PROFIT_MATCHER = word_matchers.MultiWordMatcher(
 )
 
 _GET_MATCHER = word_matchers.MultiWordMatcher("get", "gets", "getting", "got")
+
 _GUARANTEE_MATCHER = word_matchers.MultiWordMatcher(
     "guarantee", "guarantees", "guaranteeing", "guaranteed"
 )
+
 _MAKE_MATCHER = word_matchers.MultiWordMatcher("make", "makes", "making", "made")
+
 _PAY_MATCHER = word_matchers.MultiWordMatcher("pay", "pays", "paying", "paid")
+
 _RECEIVE_MATCHER = word_matchers.MultiWordMatcher(
     "receive", "receives", "receiving", "received"
 )
+
 _SEND_MATCHER = word_matchers.MultiWordMatcher("send", "sends", "sending", "sent")
+
 _TAKE_MATCHER = word_matchers.MultiWordMatcher(
     "take", "takes", "taking", "took", "taken"
 )
+
 _NEGATE_POST_MATCHER = word_matchers.MultiWordMatcher("no", "none", "not")
 
 LABEL_AND_MATCHER: Dict[str, word_matchers.BaseMatcher] = {}
