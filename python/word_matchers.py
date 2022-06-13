@@ -158,7 +158,7 @@ def make_distance_matcher(
     matcher1: Union[str, BaseMatcher],
     matcher2: Union[str, BaseMatcher],
     min_distance: int = 0,
-):
+) -> DistanceMatcher:
     return DistanceMatcher(
         list(range(min_distance, max_distance + 1)), matcher1, matcher2
     )
