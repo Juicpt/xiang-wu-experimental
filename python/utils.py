@@ -1,6 +1,6 @@
 import itertools
 
-from typing import Generator, List
+from typing import Iterable, List
 
 import pandas as pd
 
@@ -23,5 +23,5 @@ def slug_to_url(slug: str) -> str:
     return f"https://opensea.io/collection/{slug}"
 
 
-def consume_first(gen: Generator) -> List:
+def consume_first(gen: Iterable) -> List:
     return list(itertools.islice(gen, 1))
