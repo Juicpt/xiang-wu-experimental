@@ -1,11 +1,13 @@
 import os
 
+import pandas as pd
+
 import snowflake.connector as sf_conn
 
 _SNOWFLAKE_CONTEXT = None
 
 
-def snowflake_run_query(sql):
+def snowflake_run_query(sql: str) -> pd.DataFrame:
     global _SNOWFLAKE_CONTEXT
     if _SNOWFLAKE_CONTEXT is None:
         _SNOWFLAKE_CONTEXT = sf_conn.connect(

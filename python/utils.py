@@ -1,9 +1,11 @@
 import itertools
 
+from typing import Generator, List
+
 import pandas as pd
 
 
-def pandas_print_full(x):
+def pandas_print_full(x: pd.DataFrame):
     pd.set_option("display.max_rows", None)
     pd.set_option("display.max_columns", None)
     pd.set_option("display.width", 2000)
@@ -17,9 +19,9 @@ def pandas_print_full(x):
     pd.reset_option("display.max_colwidth")
 
 
-def slug_to_url(slug):
+def slug_to_url(slug: str) -> str:
     return f"https://opensea.io/collection/{slug}"
 
 
-def consume_first(gen):
+def consume_first(gen: Generator) -> List:
     return list(itertools.islice(gen, 1))
