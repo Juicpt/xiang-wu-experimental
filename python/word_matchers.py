@@ -93,8 +93,15 @@ class SingleWordMatcher(BaseMatcher):
         return (i, i + 1) if tokens[i] == self._word else None
 
 
-def cast_to_matcher(matcher: Union[str, BaseMatcher]) -> BaseMatcher:
-    return SingleWordMatcher(matcher) if isinstance(matcher, str) else matcher
+def cast_to_matcher(matcher: Union[str, Iterable[str], BaseMatcher]) -> BaseMatcher:
+    if isinstance(matcher, str):
+        return SingleWordMatcher(matcher)
+    try:
+        if all(isinstance(x, str) for x in matcher):
+            return MultiWordMatcher(*matcher)
+    except TypeError:
+        pass
+    return matcher
 
 
 class MultiWordMatcher(BaseMatcher):

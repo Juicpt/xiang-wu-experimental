@@ -149,14 +149,14 @@ LABEL_AND_MATCHER["PROFIT_GOT"] = word_matchers.make_distance_matcher(
 
 LABEL_AND_MATCHER["FINANCIAL_FREEDOM"] = word_matchers.make_distance_matcher(
     2,
-    word_matchers.MultiWordMatcher("finance", "financial", "financially", "money"),
-    word_matchers.MultiWordMatcher("free", "freedom"),
+    ["finance", "financial", "financially", "money"],
+    ["free", "freedom"],
 )
 
 LABEL_AND_MATCHER["RETIRE_EARLY"] = word_matchers.make_distance_matcher(
     2,
-    word_matchers.MultiWordMatcher("retire", "retires", "retiring", "retired"),
-    word_matchers.MultiWordMatcher("early", "now", "soon", "tomorrow"),
+    ["retire", "retires", "retiring", "retired"],
+    ["early", "now", "soon", "tomorrow"],
 )
 
 LABEL_AND_MATCHER["SECURITY_UNIGRAM"] = word_matchers.MultiWordMatcher(
@@ -172,17 +172,17 @@ LABEL_AND_MATCHER["SECURITY_UNIGRAM"] = word_matchers.MultiWordMatcher(
 
 LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.MultiWordMatcher("be", "is", "are", "was", "were"),
+    ["be", "is", "are", "was", "were"],
     word_matchers.FirstMatcher(
-        word_matchers.MultiWordMatcher(
+        [
             "investing",
             "investment",
             "investments",
             "lucrative",
             "profitable",
-        ),
+        ],
         word_matchers.SeqMatcher(
-            word_matchers.MultiWordMatcher("money", "profit"),
+            ["money", "profit"],
             "making",
         ),
     ),
@@ -190,7 +190,7 @@ LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
 
 LABEL_AND_MATCHER["INCREASE_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.MultiWordMatcher(
+    [
         "double",
         "doubling",
         "doubled",
@@ -206,20 +206,20 @@ LABEL_AND_MATCHER["INCREASE_INVESTMENT"] = word_matchers.make_distance_matcher(
         "triple",
         "tripling",
         "tripled",
-    ),
+    ],
     _WHAT_TO_INCREASE_MATCHER,
 )
 
 LABEL_AND_MATCHER["INVESTMENT_INCREASED"] = word_matchers.make_distance_matcher(
     2,
     _WHAT_TO_INCREASE_MATCHER,
-    word_matchers.MultiWordMatcher(
+    [
         "doubled",
         "grown",
         "increased",
         "multiplied",
         "tripled",
-    ),
+    ],
 )
 
 LABEL_AND_MATCHER["CRYPTO_OFFERING"] = word_matchers.make_distance_matcher(
@@ -229,12 +229,12 @@ LABEL_AND_MATCHER["CRYPTO_OFFERING"] = word_matchers.make_distance_matcher(
 )
 
 LABEL_AND_MATCHER["REVENUE_SHARE"] = word_matchers.SeqMatcher(
-    word_matchers.MultiWordMatcher("profit", "rev", "revenue"),
-    word_matchers.MultiWordMatcher("share", "sharing"),
+    ["profit", "rev", "revenue"],
+    ["share", "sharing"],
 )
 
 LABEL_AND_MATCHER["PASSIVE_INCOME"] = word_matchers.SeqMatcher(
-    word_matchers.MultiWordMatcher(
+    [
         "passive",
         "stable",
         "daily",
@@ -243,13 +243,13 @@ LABEL_AND_MATCHER["PASSIVE_INCOME"] = word_matchers.SeqMatcher(
         "yearly",
         "recurring",
         "diversified",
-    ),
+    ],
     _PROFIT_MATCHER.extend("investment"),
 )
 
 LABEL_AND_MATCHER["TRADE_SECURITY"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.MultiWordMatcher(
+    [
         "buy",
         "buying",
         "bought",
@@ -262,12 +262,39 @@ LABEL_AND_MATCHER["TRADE_SECURITY"] = word_matchers.make_distance_matcher(
         "transact",
         "transacting",
         "transacted",
-    ),
+    ],
     _SECURITY_MATCHER,
 )
 
 LABEL_AND_MATCHER["SECURITY_TRADED"] = word_matchers.make_distance_matcher(
     2,
     _SECURITY_MATCHER,
-    word_matchers.MultiWordMatcher("bought", "sold", "traded", "transacted"),
+    ["bought", "sold", "traded", "transacted"],
+)
+
+LABEL_AND_MATCHER["I_WILL_BUY"] = word_matchers.make_distance_matcher(
+    2,
+    word_matchers.SeqMatcher(
+        ["i", "we"],
+        ["will", "would", "ll"],
+    ),
+    ["buy", "buyback"],
+)
+
+LABEL_AND_MATCHER["CASINO_UNIGRAM"] = word_matchers.MultiWordMatcher(
+    "casino", "casinos", "gamble", "gambles", "gambling", "gambled"
+)
+
+LABEL_AND_MATCHER["CASINO_BETTING"] = word_matchers.make_distance_matcher(
+    4,
+    ["bet", "betting", "play", "playing"],
+    word_matchers.make_distance_matcher(
+        1,
+        ["to", "for"],
+        word_matchers.FirstMatcher(
+            _MONEY_MATCHER,
+            _PROFIT_MATCHER,
+            ["win", "winning"],
+        ),
+    ),
 )
