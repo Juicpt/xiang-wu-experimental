@@ -241,10 +241,11 @@ LABEL_AND_MATCHER["PASSIVE_INCOME"] = word_matchers.SeqMatcher(
         "weekly",
         "monthly",
         "yearly",
+        "timely",
         "recurring",
         "diversified",
     ],
-    _PROFIT_MATCHER.extend("investment"),
+    word_matchers.FirstMatcher(_INTEREST_MATCHER, _PROFIT_MATCHER, "investment"),
 )
 
 LABEL_AND_MATCHER["TRADE_SECURITY"] = word_matchers.make_distance_matcher(
