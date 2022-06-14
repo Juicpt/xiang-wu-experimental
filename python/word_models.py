@@ -172,7 +172,7 @@ LABEL_AND_MATCHER["SECURITY_UNIGRAM"] = word_matchers.MultiWordMatcher(
 
 LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
-    ["be", "is", "are", "was", "were"],
+    ["be", "been", "is", "are", "was", "were"],
     word_matchers.FirstMatcher(
         [
             "investing",
