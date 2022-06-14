@@ -71,7 +71,32 @@ _TAKE_MATCHER = word_matchers.MultiWordMatcher(
     "take", "takes", "taking", "took", "taken"
 )
 
+_PASSIVE_GET_MATCHER = word_matchers.MultiWordMatcher(
+    "guaranteed", "made", "paid", "received", "sent", "taken"
+)
+
 _NEGATE_POST_MATCHER = word_matchers.MultiWordMatcher("no", "none", "not")
+
+_WHAT_TO_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
+    "investment", "investments", "money", "moneys"
+)
+
+_SECURITY_MATCHER = word_matchers.MultiWordMatcher(
+    "bond",
+    "bonds",
+    "commodities",
+    "commodity",
+    "currencies",
+    "currency",
+    "derivative",
+    "derivatives",
+    "option",
+    "options",
+    "securities",
+    "security",
+    "stock",
+    "stocks",
+)
 
 LABEL_AND_MATCHER: Dict[str, word_matchers.BaseMatcher] = {}
 
@@ -109,10 +134,6 @@ LABEL_AND_MATCHER["GET_PROFIT"] = word_matchers.make_distance_matcher(
     ),
     _PROFIT_MATCHER,
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
-
-_PASSIVE_GET_MATCHER = word_matchers.MultiWordMatcher(
-    "guaranteed", "made", "paid", "received", "sent", "taken"
-)
 
 LABEL_AND_MATCHER["MONEY_GOT"] = word_matchers.make_distance_matcher(
     2, _MONEY_MATCHER, _PASSIVE_GET_MATCHER
@@ -167,10 +188,6 @@ LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
     ),
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
-_WHAT_TO_INCREASE_MATCHER = word_matchers.MultiWordMatcher(
-    "investment", "investments", "money", "moneys"
-)
-
 LABEL_AND_MATCHER["INCREASE_INVESTMENT"] = word_matchers.make_distance_matcher(
     4,
     word_matchers.MultiWordMatcher(
@@ -203,23 +220,6 @@ LABEL_AND_MATCHER["INVESTMENT_INCREASED"] = word_matchers.make_distance_matcher(
         "multiplied",
         "tripled",
     ),
-)
-
-_SECURITY_MATCHER = word_matchers.MultiWordMatcher(
-    "bond",
-    "bonds",
-    "commodities",
-    "commodity",
-    "currencies",
-    "currency",
-    "derivative",
-    "derivatives",
-    "option",
-    "options",
-    "securities",
-    "security",
-    "stock",
-    "stocks",
 )
 
 LABEL_AND_MATCHER["CRYPTO_OFFERING"] = word_matchers.make_distance_matcher(
