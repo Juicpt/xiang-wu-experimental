@@ -219,7 +219,7 @@ LABEL_AND_MATCHER["INVESTMENT_INCREASED"] = word_matchers.make_distance_matcher(
 LABEL_AND_MATCHER["CRYPTO_OFFERING"] = word_matchers.make_distance_matcher(
     2,
     _SECURITY_MATCHER.extend("coin", "crypto"),
-    "offering",
+    ["listing", "offering"],
 )
 
 LABEL_AND_MATCHER["REVENUE_SHARE"] = word_matchers.SeqMatcher(
