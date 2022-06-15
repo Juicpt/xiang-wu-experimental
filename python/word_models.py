@@ -176,8 +176,8 @@ LABEL_AND_MATCHER["IS_INVESTMENT"] = word_matchers.make_distance_matcher(
             "profitable",
         ],
         word_matchers.SeqMatcher(
-            ["money", "profit"],
-            "making",
+            ["money", "profit", "income", "interest"],
+            ["making", "generating", "bearing"],
         ),
     ),
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
