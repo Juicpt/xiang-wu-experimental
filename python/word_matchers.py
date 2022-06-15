@@ -93,17 +93,6 @@ class SingleWordMatcher(BaseMatcher):
         return (i, i + 1) if tokens[i] == self._word else None
 
 
-def cast_to_matcher(matcher: Union[str, Iterable[str], BaseMatcher]) -> BaseMatcher:
-    if isinstance(matcher, str):
-        return SingleWordMatcher(matcher)
-    try:
-        if all(isinstance(x, str) for x in matcher):
-            return MultiWordMatcher(*matcher)
-    except TypeError:
-        pass
-    return matcher
-
-
 class MultiWordMatcher(BaseMatcher):
     def __init__(self, *words):
         self._words = set(words)
@@ -114,6 +103,17 @@ class MultiWordMatcher(BaseMatcher):
     def extend(self, *new_words):
         new_words = self._words | set(new_words)
         return MultiWordMatcher(*new_words)
+
+
+def cast_to_matcher(matcher: Union[str, Iterable[str], BaseMatcher]) -> BaseMatcher:
+    if isinstance(matcher, str):
+        return SingleWordMatcher(matcher)
+    try:
+        if all(isinstance(x, str) for x in matcher):
+            return MultiWordMatcher(*matcher)
+    except TypeError:
+        pass
+    return matcher
 
 
 class SeqMatcher(BaseMatcher):
