@@ -6,7 +6,7 @@ from . import utils
 
 
 def extract_words(s: str) -> List[str]:
-    return re.findall(r"[a-zA-Z]+|[0-9]+|\$+(?![a-zA-Z0-9])", s)
+    return re.findall(r"[a-zA-Z]+|[0-9.]+%*|\$+(?![a-zA-Z0-9])", s)
 
 
 def split_at_capital(s: str) -> List[str]:
