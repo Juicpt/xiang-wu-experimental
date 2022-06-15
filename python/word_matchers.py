@@ -104,6 +104,10 @@ class MultiWordMatcher(BaseMatcher):
         new_words = self._words | set(new_words)
         return MultiWordMatcher(*new_words)
 
+    def __or__(self, matcher: "MultiWordMatcher") -> "MultiWordMatcher":
+        assert isinstance(matcher, MultiWordMatcher)
+        return MultiWordMatcher(*(self._words | matcher._words))
+
 
 def cast_to_matcher(matcher: Union[str, Iterable[str], BaseMatcher]) -> BaseMatcher:
     if isinstance(matcher, str):

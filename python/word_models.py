@@ -102,36 +102,30 @@ LABEL_AND_MATCHER: Dict[str, word_matchers.BaseMatcher] = {}
 
 LABEL_AND_MATCHER["GET_MONEY"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.FirstMatcher(
-        _GET_MATCHER,
-        _GUARANTEE_MATCHER,
-        _MAKE_MATCHER,
-        _PAY_MATCHER,
-        _RECEIVE_MATCHER,
-        _SEND_MATCHER,
-        _TAKE_MATCHER,
-    ),
+    _GET_MATCHER
+    | _GUARANTEE_MATCHER
+    | _MAKE_MATCHER
+    | _PAY_MATCHER
+    | _RECEIVE_MATCHER
+    | _SEND_MATCHER
+    | _TAKE_MATCHER,
     _MONEY_MATCHER,
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["GET_INTEREST"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.FirstMatcher(
-        _GET_MATCHER, _GUARANTEE_MATCHER, _PAY_MATCHER, _RECEIVE_MATCHER
-    ),
+    _GET_MATCHER | _GUARANTEE_MATCHER | _PAY_MATCHER | _RECEIVE_MATCHER,
     _INTEREST_MATCHER,
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
 LABEL_AND_MATCHER["GET_PROFIT"] = word_matchers.make_distance_matcher(
     4,
-    word_matchers.FirstMatcher(
-        _GET_MATCHER,
-        _GUARANTEE_MATCHER,
-        _MAKE_MATCHER,
-        _RECEIVE_MATCHER,
-        _SEND_MATCHER,
-        _TAKE_MATCHER,
-    ),
+    _GET_MATCHER
+    | _GUARANTEE_MATCHER
+    | _MAKE_MATCHER
+    | _RECEIVE_MATCHER
+    | _SEND_MATCHER
+    | _TAKE_MATCHER,
     _PROFIT_MATCHER,
 ).post(negative_matcher=_NEGATE_POST_MATCHER, padding_start=2)
 
@@ -245,7 +239,7 @@ LABEL_AND_MATCHER["PASSIVE_INCOME"] = word_matchers.SeqMatcher(
         "recurring",
         "diversified",
     ],
-    word_matchers.FirstMatcher(_INTEREST_MATCHER, _PROFIT_MATCHER, "investment"),
+    (_INTEREST_MATCHER | _PROFIT_MATCHER).extend("investment"),
 )
 
 LABEL_AND_MATCHER["TRADE_SECURITY"] = word_matchers.make_distance_matcher(
@@ -292,10 +286,6 @@ LABEL_AND_MATCHER["CASINO_BETTING"] = word_matchers.make_distance_matcher(
     word_matchers.make_distance_matcher(
         1,
         ["to", "for"],
-        word_matchers.FirstMatcher(
-            _MONEY_MATCHER,
-            _PROFIT_MATCHER,
-            ["win", "winning"],
-        ),
+        (_MONEY_MATCHER | _PROFIT_MATCHER).extend("win", "winning"),
     ),
 )
