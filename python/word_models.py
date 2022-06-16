@@ -271,7 +271,7 @@ LABEL_AND_MATCHER["I_WILL_BUY"] = word_matchers.make_distance_matcher(
     2,
     word_matchers.SeqMatcher(
         ["i", "we"],
-        ["will", "would", "ll"],
+        ["will", "ll", "would", "d"],
     ),
     ["buy", "buyback"],
 )
